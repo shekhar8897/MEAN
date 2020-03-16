@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 
 //     next();
 // })
+
 app.use(cors());
 
 
