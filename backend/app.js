@@ -1,7 +1,21 @@
 const express=require('express')
 const bodyParser=require('body-parser');
-const app=express();
 const mongoose=require('mongoose');
+const Post=require('./models/post');
+
+const app=express();
+
+
+mongoose.connect('mongodb+srv://myMEAN:0Czw2vZ3xCfxJAcl@mymean-qyarn.mongodb.net/test?retryWrites=true&w=majority')
+    .then(()=>{
+        console.log('connected to database');
+    })
+    .catch(()=>{
+        console.log('connection failed')
+    });
+
+//0Czw2vZ3xCfxJAcl
+
 const cors=require('cors');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
@@ -20,37 +34,50 @@ app.use(cors());
 
 
 app.post("/api/posts",(req,res,next)=>{
-    const post=req.body;
-    console.log(post);
+    //const post=req.body;
 
+    const post=new Post({
+        title:req.body.title,
+        content:req.body.content,
+    });
+    console.log(post);
+    post.save();
     res.status(201).json({
         message:'post added successfully',
     })
 });
 
 app.get('/api/posts',(req,res,next)=>{
-    const posts=[
-        {
-            id:'1',
-            title:'one',
-            content:'This is the first one '
-        },
-        {
-            id:'2',
-            title:'two',
-            content:'This is the second one'
-        },
-        {
-            id:'3',
-            title:'three',
-            content:'this is the third one'
-        }
-    ];
+    // const posts=[
+    //     {
+    //         id:'1',
+    //         title:'one',
+    //         content:'This is the first one '
+    //     },
+    //     {
+    //         id:'2',
+    //         title:'two',
+    //         content:'This is the second one'
+    //     },
+    //     {
+    //         id:'3',
+    //         title:'three',
+    //         content:'this is the third one'
+    //     }
+    // ];
+    Post.find()
+    .then((documents)=>{
+        console.log(documents);
+        res.status(200).json({
+            message:'Post fetched successfully',
+            posts:documents
+        });
+    })
+    .catch(()=>{
+        console.log('error');
+    })
 
-    res.status(200).json({
-        message:'Post fetched successfully',
-        posts:posts
-    });
+   
 });
 
 module.exports=app;
