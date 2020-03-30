@@ -6,7 +6,7 @@ const Post=require('./models/post');
 const app=express();
 
 
-mongoose.connect('mongodb+srv://shekharMEAN:LAn9ebVH636fkjFb@mymean-qyarn.mongodb.net/myMEAN?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://myMEAN:lA1ioKawCnstXpks@cluster0-er8gi.mongodb.net/myMEAN?retryWrites=true&w=majority')
     .then(()=>{
         console.log('connected to database');
     })
@@ -14,7 +14,7 @@ mongoose.connect('mongodb+srv://shekharMEAN:LAn9ebVH636fkjFb@mymean-qyarn.mongod
         console.log('connection failed')
     });
 
-//LAn9ebVH636fkjFb
+//lA1ioKawCnstXpks
 
 const cors=require('cors');
 app.use(bodyParser.json());
