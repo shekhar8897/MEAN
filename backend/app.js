@@ -6,7 +6,7 @@ const Post=require('./models/post');
 const app=express();
 
 
-mongoose.connect('mongodb+srv://myMEAN:0Czw2vZ3xCfxJAcl@mymean-qyarn.mongodb.net/test?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://shekharMEAN:LAn9ebVH636fkjFb@mymean-qyarn.mongodb.net/myMEAN?retryWrites=true&w=majority')
     .then(()=>{
         console.log('connected to database');
     })
@@ -14,14 +14,14 @@ mongoose.connect('mongodb+srv://myMEAN:0Czw2vZ3xCfxJAcl@mymean-qyarn.mongodb.net
         console.log('connection failed')
     });
 
-//0Czw2vZ3xCfxJAcl
+//LAn9ebVH636fkjFb
 
 const cors=require('cors');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
 // cors method used to get the data in angular app via node api
-
+ 
 // app.use((req,res,next)=>{
 //     res.setHeader("Access-Control-Allow-Origin","*");
 //     res.setHeader("Accedd-Control-Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
@@ -79,5 +79,15 @@ app.get('/api/posts',(req,res,next)=>{
 
    
 });
+
+app.delete('/api/posts/:id',(req,res,next)=>{
+    //console.log(req.params.id);
+    Post.deleteOne({_id:req.params.id})
+        .then((result)=>{
+            console.log(result);
+            res.status(200).json({message:'deleted successfully'});
+        })
+    
+})
 
 module.exports=app;
